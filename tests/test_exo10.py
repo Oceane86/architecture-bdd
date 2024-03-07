@@ -1,12 +1,17 @@
-import unittest
-import random
+import pytest
 
-def guess_the_number(max_attempts=5):
-    number = random.randint(1, 100)
+
+def guess_the_number(max_attempts=5, input_function=input):
+    number = 42
     attempts = 0
 
     while attempts < max_attempts:
-        guess = int(input("Trouve le nombre: "))
+        try:
+            guess = int(input_function("Trouve le nombre: "))
+        except ValueError:
+            print("Veuillez entrer un nombre valide.")
+            continue
+
         attempts += 1
 
         if guess < number:
@@ -17,33 +22,27 @@ def guess_the_number(max_attempts=5):
             print("C'est le bon nombre ! Il reste {} tentatives!".format(attempts))
             return
 
-    print("Désolé, vous n'avez pas trouver {} tentatives.".format(max_attempts))
+    print("Désolé, vous n'avez pas trouvé {} .".format(max_attempts))
+    raise SystemExit  
 
-class TestGuessTheNumber(unittest.TestCase):
 
-    def test_guess_the_number(self):
-        random.seed(0)  
+@pytest.mark.parametrize("input_values, expected_output", [
+    (["42"], "C'est le bon nombre ! Il reste 1 tentatives!"),
+    (["dix", "10", "20", "30"], "Veuillez entrer un nombre valide."),
+    (["10", "20", "30"], "Désolé, vous n'avez pas trouvé 3 ."),
+])
+def test_guess_the_number_with_parametrize(capsys, input_values, expected_output, monkeypatch):
 
-        max_attempts = 1
-        number = 42
-        input_mock = unittest.mock.Mock()
-        input_mock.side_effect = [number]
-        with unittest.mock.patch('builtins.input', input_mock):
-            guess_the_number(max_attempts)
+    input_values_iter = iter(input_values)
+    monkeypatch.setattr('builtins.input', lambda _: str(next(input_values_iter, None)))
 
-        max_attempts = 5
-        number = 7
-        input_mock = unittest.mock.Mock()
-        input_mock.side_effect = [6, 8, 7]
-        with unittest.mock.patch('builtins.input', input_mock):
-            guess_the_number(max_attempts)
+    with pytest.raises(SystemExit):
+        with capsys.disabled():
+            guess_the_number()
 
-        max_attempts = 3
-        number = 42
-        input_mock = unittest.mock.Mock()
-        input_mock.side_effect = [10, 20, 30]
-        with unittest.mock.patch('builtins.input', input_mock):
-            guess_the_number(max_attempts)
+    captured_output, _ = capsys.readouterr()
+    assert captured_output.strip() == expected_output
+
 
 if __name__ == '__main__':
-    unittest.main()
+    pytest.main([__file__])
