@@ -6,18 +6,18 @@ def guess_the_number(max_attempts=5):
     attempts = 0
 
     while attempts < max_attempts:
-        guess = int(input("Guess the number: "))
+        guess = int(input("Trouve le nombre: "))
         attempts += 1
 
         if guess < number:
-            print("Too low!")
+            print("Trop bas")
         elif guess > number:
-            print("Too high!")
+            print("Trop haut!")
         else:
-            print("Congratulations! You guessed the number in {} attempts!".format(attempts))
+            print("C'est le bon nombre ! Il reste {} tentatives!".format(attempts))
             return
 
-    print("Sorry, you didn't guess the number in {} attempts.".format(max_attempts))
+    print("Désolé, vous n'avez pas trouver {} tentatives.".format(max_attempts))
 
 class TestGuessTheNumber(unittest.TestCase):
 
