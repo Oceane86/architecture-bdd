@@ -19,30 +19,26 @@ def guess_the_number(max_attempts=5, input_function=input):
         elif guess > number:
             print("Trop haut!")
         else:
-            print("C'est le bon nombre ! Il reste {} tentatives!".format(attempts))
+            print(f"C'est le bon nombre ! Il reste {max_attempts - attempts} tentatives.")
             return
 
-    print("Désolé, vous n'avez pas trouvé {} .".format(max_attempts))
-    raise SystemExit  
-
+    print(f"Désolé, vous n'avez pas trouvé {max_attempts} tentatives.")
+    raise SystemExit
 
 @pytest.mark.parametrize("input_values, expected_output", [
-    (["42"], "C'est le bon nombre ! Il reste 1 tentatives!"),
+    (["42"], "C'est le bon nombre ! Il reste 4 tentatives."),
     (["dix", "10", "20", "30"], "Veuillez entrer un nombre valide."),
-    (["10", "20", "30"], "Désolé, vous n'avez pas trouvé 3 ."),
+    (["10", "20", "30"], "Désolé, vous n'avez pas trouvé 5 tentatives."),
 ])
 def test_guess_the_number_with_parametrize(capsys, input_values, expected_output, monkeypatch):
-
     input_values_iter = iter(input_values)
     monkeypatch.setattr('builtins.input', lambda _: str(next(input_values_iter, None)))
 
     with pytest.raises(SystemExit):
-        with capsys.disabled():
-            guess_the_number()
+        guess_the_number()
 
     captured_output, _ = capsys.readouterr()
     assert captured_output.strip() == expected_output
-
 
 if __name__ == '__main__':
     pytest.main([__file__])
