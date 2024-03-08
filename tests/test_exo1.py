@@ -1,13 +1,4 @@
-import unittest
-
-class TestLettre(unittest.TestCase):
-
-    def test_count_majuscule(self):
-        self.assertEqual(count_letters("OK"), 2)
-
-    def test_count_minuscule(self):
-        self.assertEqual(count_letters("ok"), 2)
-    
+import pytest
 
 
 def count_letters(chaine):
@@ -22,5 +13,15 @@ def count_letters(chaine):
 
     return majuscules, minuscules
 
-if __name__ == '__main__':
-    unittest.main()
+
+@pytest.mark.parametrize("input_string, expected_counts", [
+    ("OK", (2, 0)),
+    ("ok", (0, 2)),
+    ("HelloWorld", (2, 8)),
+    ("AbCdEf", (3, 3)),
+    ("123", (0, 0)),
+    ("", (0, 0)),
+])
+def test_count_letters(input_string, expected_counts):
+    result = count_letters(input_string)
+    assert result == expected_counts
