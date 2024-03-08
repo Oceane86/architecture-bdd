@@ -1,5 +1,8 @@
-import pytest
 # Écrivez un programme qui crée un bytearray à partir d'une liste d'entiers, puis modifie un de ses éléments.
+
+import pytest
+
+
 def modifier_element(byte_array, index, new_valeur):
     byte_array[index] = new_valeur
     return byte_array
