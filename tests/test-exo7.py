@@ -1,3 +1,6 @@
+# Écrivez un programme Python qui effectue une rotation à droite des éléments 
+# d'une liste. La rotation doit être définie par l'utilisateur.
+
 import pytest
 
 
