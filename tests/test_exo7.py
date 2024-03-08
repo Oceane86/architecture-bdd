@@ -1,21 +1,29 @@
-import unittest
+import pytest
 
-class TestRotationListe(unittest.TestCase):
 
-    def test_rotation(self):
-        liste = [1, 2, 3, 4, 5, 6]
-        x = 2
-        new_liste = liste[int(x):] + liste[0:int(x)]
-        expected = [3, 4, 5, 6, 1, 2]
+def rotate_list(lst, x):
+    n = len(lst)
+    if n == 0:
+        return lst
 
-        self.assertEqual(new_liste, expected)
+    x = x % n  
+    return lst[-x:] + lst[:-x]
 
-        liste = [1, 2, 3, 4, 5, 6]
-        x = 3
-        new_liste = liste[int(x):] + liste[0:int(x)]
-        expected = [4, 5, 6, 1, 2, 3]
 
-        self.assertEqual(new_liste, expected)
+class TestRotationListe:
+
+    @pytest.mark.parametrize("liste, x, expected", [
+        ([1, 2, 3, 4, 5, 6], 2, [5, 6, 1, 2, 3, 4]),
+        ([1, 2, 3, 4, 5, 6], 3, [4, 5, 6, 1, 2, 3]),
+        ([], 2, []),
+        (['a', 'b', 'c', 'd'], 1, ['d', 'a', 'b', 'c']),
+        ([1, 2, 3, 4, 5, 6], -1, [2, 3, 4, 5, 6, 1]),
+        ([1, 2, 3, 4, 5, 6, 7, 8], 5, [4, 5, 6, 7, 8, 1, 2, 3]),
+    ])
+    def test_rotation(self, liste, x, expected):
+        new_liste = rotate_list(liste, x)
+        assert new_liste == expected
+
 
 if __name__ == '__main__':
-    unittest.main()
+    pytest.main([__file__])
