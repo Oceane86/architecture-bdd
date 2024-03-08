@@ -1,3 +1,5 @@
+
+# Écrivez un programme qui retourne la différence symétrique entre deux ensembles.
 import pytest
 
 
