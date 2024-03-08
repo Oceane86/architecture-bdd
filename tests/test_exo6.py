@@ -1,3 +1,6 @@
+# Écrivez un programme Python qui prend une liste et retourne une nouvelle liste 
+# contenant uniquement les éléments uniques de la première liste.
+
 import pytest
 
 
