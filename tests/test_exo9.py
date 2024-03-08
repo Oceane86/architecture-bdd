@@ -1,3 +1,6 @@
+# Écrivez un programme qui inverse l'ordre des éléments dans chaque tuple d'une liste de tuples.
+
+
 import pytest
 
 
