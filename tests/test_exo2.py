@@ -1,15 +1,14 @@
-import unittest
-
-class TestExtractionMots(unittest.TestCase):
-
-    def test_extraction(self):
-        chaine = "Python est un langage de programmation puissant et facile à apprendre"
-        mots = chaine.split()
-        python = mots[0]
-
-        self.assertEqual(python, 'Python')
-
-if __name__ == '__main__':
-    unittest.main()
+import pytest
 
 
+def extraction(chaine):
+    mots = chaine.split()
+    return mots[0]
+
+
+@pytest.mark.parametrize("input_string, expected_result", [
+    ("Python est un langage de programmation puissant et facile à apprendre", "Python"),
+])
+def test_extraction(input_string, expected_result):
+    result = extraction(input_string)
+    assert result == expected_result

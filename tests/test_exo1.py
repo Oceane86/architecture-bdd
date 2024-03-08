@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 # Écrivez un programme Python qui accepte une chaîne de caractères de l'utilisateur et affiche le nombre de majuscules et de minuscules.
 
+=======
+>>>>>>> e658f4d4b028c394129fa9ddf054f133337b6cbb
 import pytest
 
 
