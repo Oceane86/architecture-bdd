@@ -1,3 +1,5 @@
+# Écrire un programme qui choisit un nombre aléatoire entre 1 et 100 et demande à l'utilisateur de le deviner. L'utilisateur a droit à un nombre limité de tentatives. 
+# Après chaque tentative, le programme indique si le nombre mystère est plus grand ou plus petit que la saisie de l'utilisateur.
 import pytest
 
 
@@ -30,7 +32,7 @@ def guess_the_number(max_attempts=5, input_function=input):
     (["dix", "10", "20", "30"], "Veuillez entrer un nombre valide."),
     (["10", "20", "30"], "Désolé, vous n'avez pas trouvé 5 tentatives."),
 ])
-def test_guess_the_number_with_parametrize(capsys, input_values, expected_output, monkeypatch):
+def test_nombre(capsys, input_values, expected_output, monkeypatch):
     input_values_iter = iter(input_values)
     monkeypatch.setattr('builtins.input', lambda _: str(next(input_values_iter, None)))
 
